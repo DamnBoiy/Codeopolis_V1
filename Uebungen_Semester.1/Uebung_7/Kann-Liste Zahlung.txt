@@ -1,0 +1,4 @@
+- Zahlunsgmethoden : Paypal, Kredit, Zukunftig: Google p, apple p.
+- Rückerstattung, Gebührenberechnung,
+- möglich mehrere Zahlungsmethoden in EINER Rechung, oder Teilzahlung
+- 
