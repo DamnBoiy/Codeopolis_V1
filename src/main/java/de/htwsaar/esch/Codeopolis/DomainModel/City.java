@@ -248,7 +248,7 @@ public class City extends GameEntity {
 
 		//Calculation of the harvest:
 		int[] harvested = new int[Game.GrainType.values().length];
-		Conditions thisYearsConditions = Conditions.generateRandomConditions();
+		Grain.Conditions thisYearsConditions = Grain.Conditions.generateRandomConditions();
 
 		boolean drought = thisYearsConditions.GetDrought();
 		boolean fusarium = thisYearsConditions.GetFusarium();

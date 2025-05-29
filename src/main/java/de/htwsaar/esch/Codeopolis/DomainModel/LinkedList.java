@@ -1,6 +1,11 @@
 package de.htwsaar.esch.Codeopolis.DomainModel;
 
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.function.Consumer;
+
 
 public class LinkedList<T> implements Iterable<T> {
 
@@ -118,7 +123,7 @@ public class LinkedList<T> implements Iterable<T> {
 
 
     @SuppressWarnings("unchecked")
-    public void sort() {
+    public void bubblesort() {
         if (size < 2) return;
 
         boolean swapped;
@@ -133,9 +138,9 @@ public class LinkedList<T> implements Iterable<T> {
                     throw new IllegalStateException("Element does not implement Comparable");
                 }
 
-                Comparable<T> cmp = (Comparable<T>) first;
-                if (cmp.compareTo(second) > 0) {
-                    // Swap values
+                Comparable<T> comp = (Comparable<T>) first;
+                if (comp.compareTo(second) > 0) {
+                    // Swaps values
                     current.data = second;
                     current.nextNode.data = first;
                     swapped = true;
@@ -168,12 +173,6 @@ public class LinkedList<T> implements Iterable<T> {
 
         return true;
     }
-
-
-
-
-
-
 
 
 

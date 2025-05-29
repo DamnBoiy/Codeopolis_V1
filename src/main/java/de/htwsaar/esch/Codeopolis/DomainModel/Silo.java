@@ -7,7 +7,7 @@ import java.util.Iterator;
 /**
  * The Silo class represents a storage unit for a specific type of grain.
  */
-public class Silo implements Serializable{
+public class Silo implements Serializable, Comparable<Silo> {
     private LinkedList<Harvest> stock;
     private final int capacity;
     private int fillLevel;
@@ -177,6 +177,11 @@ public class Silo implements Serializable{
     public static Silo.Status getStatus(Silo silo)
     {
         return new Status(silo);
+    }
+
+    @Override
+    public int compareTo(Silo other) {
+        return Integer.compare(this.getFillLevel(), other.getFillLevel());
     }
 
     public static final class Status

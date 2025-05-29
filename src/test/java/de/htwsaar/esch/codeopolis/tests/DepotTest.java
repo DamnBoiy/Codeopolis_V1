@@ -2,6 +2,7 @@ package de.htwsaar.esch.codeopolis.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import de.htwsaar.esch.Codeopolis.DomainModel.Silo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,5 +59,40 @@ public class DepotTest {
         assertEquals(6000, depot.getCapacity(Game.GrainType.CORN));
     }
 
-  
+
+        @Test
+        public void testToStringSortedByFillLevel() {
+            Depot depot = new Depot();
+
+            // Beispiel-Silos manuell erstellen
+            Silo silo1 = new Silo(100); // leer
+            silo1.store(new Harvest("WHEAT", 20));
+
+            Silo silo2 = new Silo(100);
+            silo2.store(new Harvest("WHEAT", 50));
+
+            Silo silo3 = new Silo(100);
+            silo3.store(new Harvest("WHEAT", 10));
+
+            // Silos zum Depot hinzufügen
+            depot.addSilo(silo1);
+            depot.addSilo(silo2);
+            depot.addSilo(silo3);
+
+            String output = depot.toString();
+
+            // Stelle sicher, dass die Ausgabe in aufsteigender Reihenfolge der Füllstände erfolgt
+            int index1 = output.indexOf("Silo 1:");
+            int index2 = output.indexOf("Silo 2:");
+            int index3 = output.indexOf("Silo 3:");
+
+            // Silo 3 (10) soll zuerst kommen, dann Silo 1 (20), dann Silo 2 (50)
+            assertTrue(index1 > index3 && index2 > index1, "Silos sollten nach Füllstand sortiert sein.");
+        }
+    }
+
+
+
+
+
 }

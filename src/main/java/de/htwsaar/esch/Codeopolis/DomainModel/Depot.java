@@ -2,6 +2,7 @@ package de.htwsaar.esch.Codeopolis.DomainModel;
 
 import de.htwsaar.esch.Codeopolis.DomainModel.Harvest.*;
 import java.text.DecimalFormat;
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 public class Depot {
@@ -14,7 +15,7 @@ public class Depot {
         }
     }
 
-    public Depot(Silo[] silosArray) {
+    public Depot(LinkedList<Silo> silosArray) {
         this.silos = new LinkedList<>();
         if (silosArray != null) {
             for (Silo silo : silosArray) {
@@ -236,8 +237,16 @@ public class Depot {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         DecimalFormat df = new DecimalFormat("0.00");
+
+        // Kopie der Silos erstellen
+        LinkedList<Silo> sortedSilos = new LinkedList<>();
+        sortedSilos.addAll(silos);
+
+        // sortedSilos.sort((silo1, silo2) -> Integer.compare(silo1.getFillLevel(), silo2.getFillLevel()));
+        sortedSilos.sort(Comparator.comparingInt(Silo::getFillLevel));
+
         int i = 1;
-        for (Silo silo : silos) {
+        for (Silo silo : sortedSilos) {
             builder.append("Silo ").append(i++).append(": ");
             String grain = (silo.getGrainType() != null) ? silo.getGrainType().toString() : "EMPTY";
             builder.append(grain).append("\n");
@@ -259,6 +268,8 @@ public class Depot {
 
             builder.append("Capacity: ").append(cap).append(" units\n\n");
         }
+
         return builder.toString();
     }
+
 }

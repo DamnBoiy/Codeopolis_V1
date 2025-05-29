@@ -1,13 +1,12 @@
-/* import java.util.Random;
-
-
 package de.htwsaar.esch.Codeopolis.DomainModel.Plants;
+
+import java.util.Random;
 
 import java.util.Random;
 
 /**
  * The `Conditions` class represents environmental conditions that affect plant growth.
- * It includes information about soil conditions, average summer temperature, and average winter temperature.
+ *It includes information about soil conditions, average summer temperature, and average winter temperature.*/
 
 public class Conditions {
 
@@ -30,7 +29,7 @@ public class Conditions {
 	 * @param soilConditions         The soil conditions affecting plant growth (a float value between 0.0 and 1.0).
 	 * @param averageTemperatureSummer The average summer temperature (in degrees Celsius).
 	 * @param averageTemperatureWinter The average winter temperature (in degrees Celsius).
-	 *
+	 */
 	public Conditions(float soilConditions, float averageTemperatureSummer, float averageTemperatureWinter ) {
 		this.soilConditions = soilConditions;
 		this.averageTemperatureSummer = averageTemperatureSummer;
@@ -50,7 +49,7 @@ public class Conditions {
 	 * Gets the soil conditions affecting plant growth.
 	 *
 	 * @return The soil conditions (a float value between 0.0 and 1.0).
-	 *
+	 */
 	public float getSoilConditions() {
 		return soilConditions;
 	}
@@ -59,7 +58,7 @@ public class Conditions {
 	 * Gets the average summer temperature.
 	 *
 	 * @return The average summer temperature (in degrees Celsius).
-	 *
+	 */
 	public float getAverageTemperatureSummer() {
 		return averageTemperatureSummer;
 	}
@@ -68,7 +67,7 @@ public class Conditions {
 	 * Gets the average winter temperature.
 	 *
 	 * @return The average winter temperature (in degrees Celsius).
-	 *
+	 */
 	public float getAverageTemperatureWinter() {
 		return averageTemperatureWinter;
 	}
@@ -77,7 +76,7 @@ public class Conditions {
 	 * Factory method to create a new Conditions object with random values for all fields.
 	 *
 	 * @return A new Conditions object with random values.
-	 *
+	 */
 	public static Conditions generateRandomConditions() {
 		Random random = new Random();
 		float soilConditions = random.nextFloat(); // generates a random float value between 0.0 (inclusive) and 1.0 (exclusive)
@@ -98,4 +97,3 @@ public class Conditions {
 		return c;
 	}
 }
- */
