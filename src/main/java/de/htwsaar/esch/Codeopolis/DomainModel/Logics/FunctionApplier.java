@@ -1,4 +1,4 @@
-package Logic;
+package de.htwsaar.esch.Codeopolis.DomainModel.Logics;
 
 public class FunctionApplier {
 

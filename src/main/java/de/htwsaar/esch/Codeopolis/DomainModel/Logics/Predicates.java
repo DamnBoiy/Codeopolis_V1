@@ -1,7 +1,7 @@
-package Logic;
+package de.htwsaar.esch.Codeopolis.DomainModel.Logics;
 
 import java.util.function.Predicate;
-import static Logic.FunctionApplier.applyAndPrint;
+import static de.htwsaar.esch.Codeopolis.DomainModel.Logics.FunctionApplier.applyAndPrint;
 
 class Predicates {
     public static final Predicate<Integer> even = i -> i % 2 == 0;

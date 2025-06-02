@@ -1,6 +1,9 @@
 package de.htwsaar.esch.Codeopolis.DomainModel;
 
 import de.htwsaar.esch.Codeopolis.DomainModel.Harvest.*;
+import de.htwsaar.esch.Codeopolis.DomainModel.*;
+import de.htwsaar.esch.Codeopolis.DomainModel.Logics.LinkedList;
+
 import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
@@ -15,12 +18,11 @@ public class Depot {
         }
     }
 
+    // Änderung: Verwendung von forEach statt Schleife zur Kopie der Silos
     public Depot(LinkedList<Silo> silosArray) {
         this.silos = new LinkedList<>();
         if (silosArray != null) {
-            for (Silo silo : silosArray) {
-                this.silos.addLast(new Silo(silo));
-            }
+            silosArray.forEach(s -> this.silos.addLast(new Silo(s)));
         }
     }
 
@@ -74,41 +76,56 @@ public class Depot {
         return new DepotIterator(type);
     }
 
+    // Änderung: Nutzung von filter + for zur Berechnung
     public int getFillLevel(Game.GrainType grainType) {
         int total = 0;
-        for (Silo silo : silos) {
-            if (silo.getGrainType() == grainType) {
-                total += silo.getFillLevel();
-            }
-        }
-        return total;
-    }
-
-    public LinkedList<Silo> getSilos() {
-        LinkedList<Silo> copy = new LinkedList<>();
-        for (Silo silo : silos) {
-            copy.addLast(new Silo(silo));
-        }
-        return copy;
-    }
-
-    public int getTotalFillLevel() {
-        int total = 0;
-        for (Silo silo : silos) {
+        LinkedList<Silo> filtered = silos.filter(s -> s.getGrainType() == grainType);
+        for (Silo silo : filtered) {
             total += silo.getFillLevel();
         }
         return total;
     }
 
-    public int getCapacity(Game.GrainType grainType) {
-        int capacity = 0;
-        for (Silo silo : silos) {
-            if (silo.getGrainType() == grainType || silo.getGrainType() == null) {
-                capacity += silo.getCapacity();
-            }
-        }
-        return capacity;
+    // Änderung: Nutzung von forEach zur Kopie
+    public LinkedList<Silo> getSilos() {
+        LinkedList<Silo> copy = new LinkedList<>();
+        silos.forEach(s -> copy.addLast(new Silo(s)));
+        return copy;
     }
+
+    // Änderung: Nutzung von forEach mit Akkumulator
+   /* public int getTotalFillLevel() {
+        int total = 0;
+        silos.forEach(s -> total += s.getFillLevel());
+        return total;
+    }*/
+    public int getTotalFillLevel() {
+        final int[] total = {0};
+        silos.forEach(s -> total[0] += s.getFillLevel());
+        return total[0];
+    }
+
+    // Änderung: forEach statt Schleife mit if
+   /* public int getCapacity(Game.GrainType grainType) {
+        int capacity = 0;
+        silos.forEach(s -> {
+            if (s.getGrainType() == grainType || s.getGrainType() == null) {
+                capacity += s.getCapacity();
+            }
+        });
+        return capacity;
+    }*/
+    public int getCapacity(Game.GrainType grainType) {
+        final int[] capacity = {0}; //capacity  als array da der Inhalt verändert werden kann aber nicht die Referenz
+        silos.forEach(s -> {
+            if (s.getGrainType() == grainType || s.getGrainType() == null) {
+                capacity[0] += s.getCapacity();
+            }
+        });
+        return capacity[0];
+    }
+
+
 
     public boolean store(Harvest harvest) {
         for (Silo silo : silos) {
@@ -129,23 +146,23 @@ public class Depot {
         return false;
     }
 
+    // Änderung: Nutzung von filter zur Auswahl der Silos
     public int takeOut(int amount, Game.GrainType grainType) {
         int taken = 0;
-        for (Silo silo : silos) {
-            if (silo.getGrainType() == grainType) {
-                int current = silo.takeOut(amount);
-                amount -= current;
-                taken += current;
-                if (amount <= 0) break;
-            }
+        for (Silo silo : silos.filter(s -> s.getGrainType() == grainType)) {
+            int current = silo.takeOut(amount);
+            amount -= current;
+            taken += current;
+            if (amount <= 0) break;
         }
         return taken;
     }
 
+    // Änderung: Nutzung von forEach (inkl. Methodenreferenz)
     public int takeOut(int amount) {
         int total = getTotalFillLevel();
         if (amount >= total) {
-            for (Silo silo : silos) silo.emptySilo();
+            silos.forEach(Silo::emptySilo);
             return total;
         }
 
@@ -182,19 +199,14 @@ public class Depot {
         this.takeOut((int) (numberOfSilos * GameConfig.DEPOT_EXPANSION_COST));
     }
 
+    // Änderung: defragment nutzt forEach + Methodenreferenz
     public void defragment() {
         LinkedList<Harvest> allHarvests = new LinkedList<>();
-        for (Silo silo : silos) {
+        silos.forEach(silo -> {
             LinkedList<Harvest> h = silo.emptySilo();
-            if (h != null) {
-                for (Harvest harvest : h) {
-                    if (harvest != null) allHarvests.addLast(harvest);
-                }
-            }
-        }
-        for (Harvest harvest : allHarvests) {
-            store(harvest);
-        }
+            if (h != null) h.forEach(allHarvests::addLast);
+        });
+        allHarvests.forEach(this::store);
     }
 
     private int getTotalHarvestCount() {
@@ -233,16 +245,14 @@ public class Depot {
         return result;
     }
 
+    // Änderung: Verwendung von sort mit Methodenreferenz
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         DecimalFormat df = new DecimalFormat("0.00");
 
-        // Kopie der Silos erstellen
         LinkedList<Silo> sortedSilos = new LinkedList<>();
         sortedSilos.addAll(silos);
-
-        // sortedSilos.sort((silo1, silo2) -> Integer.compare(silo1.getFillLevel(), silo2.getFillLevel()));
         sortedSilos.sort(Comparator.comparingInt(Silo::getFillLevel));
 
         int i = 1;
@@ -271,5 +281,4 @@ public class Depot {
 
         return builder.toString();
     }
-
 }

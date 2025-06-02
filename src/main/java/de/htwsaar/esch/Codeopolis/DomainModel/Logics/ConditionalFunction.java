@@ -1,4 +1,4 @@
-package Logic;
+package de.htwsaar.esch.Codeopolis.DomainModel.Logics;
 
 
 import java.util.function.Predicate;

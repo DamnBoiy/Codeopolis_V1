@@ -1,10 +1,12 @@
-package de.htwsaar.esch.Codeopolis.DomainModel;
+package de.htwsaar.esch.Codeopolis.DomainModel.Logics;
 
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.function.Consumer;
+import de.htwsaar.esch.Codeopolis.DomainModel.Logics.StringProcessor;
+
 
 
 public class LinkedList<T> implements Iterable<T> {

@@ -1,5 +1,7 @@
 package de.htwsaar.esch.Codeopolis.DomainModel;
 
+import de.htwsaar.esch.Codeopolis.DomainModel.Logics.LinkedList;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
