@@ -1,4 +1,4 @@
-package Logic;
+package Uebungen;
 
 import java.io.FileWriter;
 import java.io.IOException;

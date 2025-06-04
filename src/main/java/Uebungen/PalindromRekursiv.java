@@ -1,4 +1,4 @@
-package Logic;
+package Uebungen;
 
 public class PalindromRekursiv implements Palindrom {
     @Override

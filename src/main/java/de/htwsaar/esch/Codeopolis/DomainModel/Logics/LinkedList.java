@@ -5,8 +5,7 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.function.Consumer;
-import de.htwsaar.esch.Codeopolis.DomainModel.Logics.StringProcessor;
-
+import de.htwsaar.esch.Codeopolis.DomainModel.Harvest.Harvest;
 
 
 public class LinkedList<T> implements Iterable<T> {

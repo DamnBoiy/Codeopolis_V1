@@ -9,6 +9,7 @@ public class Silo implements Serializable, Comparable<Silo> {
     private final LinkedList<Harvest> stock;
     private final int capacity;
     private int fillLevel;
+    private LinkedList<Harvest> copiedStock = new LinkedList<>();
 
     public Silo(int capacity) {
         this.capacity = capacity;
@@ -97,6 +98,23 @@ public class Silo implements Serializable, Comparable<Silo> {
         fillLevel -= totalDecayedAmount[0];
         return totalDecayedAmount[0];
     }
+
+
+    public void copyStock()
+    {
+        this.copiedStock.forEach(h -> this.stock.addLast(h.copy()));
+    }
+
+    public LinkedList<Harvest> getCopiedStock() {
+        return copiedStock;
+    }
+
+
+
+
+
+
+
 
     public static Silo.Status getStatus(Silo silo) {
         return new Status(silo);

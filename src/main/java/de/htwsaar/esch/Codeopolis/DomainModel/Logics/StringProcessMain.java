@@ -54,5 +54,9 @@ public class StringProcessMain {
         // 8. forEach: Alle Strings mit » vorangestellt ausgeben
         System.out.println("\nAusgabe mit » vorangestellt:");
         processor.forEach(s -> System.out.println("» " + s));
+
+        // 9. unchanged: Alle Strings unverändert ausgeben
+        System.out.println(processor);
+
     }
 }

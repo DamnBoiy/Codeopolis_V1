@@ -1,4 +1,4 @@
-package Logic;
+package Uebungen;
 
 import java.io.File;
 import java.nio.file.*;
