@@ -11,7 +11,7 @@ import java.util.Scanner;
 import java.util.function.Predicate;
 
 public class LibraryCLI {
-    private LibraryManagementSystem libraryManagementSystem;
+    private final LibraryManagementSystem libraryManagementSystem;
     private Scanner scanner;
 
     public LibraryCLI(LibraryManagementSystem libraryManagementSystem) {

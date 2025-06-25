@@ -11,7 +11,7 @@ public class MainEruption {
         List<Eruption> eruptions;
 
         try {
-            eruptions = parser.parse("volcanos.csv");
+            eruptions = parser.parse("C:\\Users\\damon\\Downloads\\volcanos.csv");
         } catch (IOException e) {
             System.err.println("Fehler beim Einlesen der Datei: " + e.getMessage());
             return;
@@ -110,3 +110,4 @@ public class MainEruption {
                 .forEach(System.out::println);
     }
 }
+

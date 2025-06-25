@@ -49,9 +49,20 @@ public class EruptionCsvParser {
             int startMonth = parseIntOrDefault(parts[10], 1);
             int startDay = parseIntOrDefault(parts[12], 1);
 
+
+//            int endYear = Integer.parseInt(parts[16]);
+//            int endMonth = Integer.parseInt(parts[18]);
+//            int endDay = Integer.parseInt(parts[20]);
+
             Integer endYear = parseNullableInt(parts[16]);
             Integer endMonth = parseNullableInt(parts[18]);
             Integer endDay = parseNullableInt(parts[20]);
+
+
+            /*  Integer endYear = parseLine(parts[16]).getEndYear();
+                Integer endMonth = parseLine(parts[18]).getEndMonth();
+                Integer endDay = parseLine(parts[20]).getEndDay();
+                */
 
             if (endYear != null) {
                 int m = (endMonth != null) ? endMonth : 12;

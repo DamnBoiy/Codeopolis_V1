@@ -88,7 +88,6 @@ public class Eruption {
         return longitude;
     }
 
-
     /**
      * Berechnet die Dauer des Ausbruchs in Tagen.
      * Gibt -1 zurück, wenn kein Enddatum bekannt ist.
@@ -103,7 +102,6 @@ public class Eruption {
         }
     }
 
-
     @Override
     public String toString() {
         String start = String.format("%02d.%02d.%04d", startDay, startMonth, startYear);
@@ -113,7 +111,6 @@ public class Eruption {
         return String.format("Eruption of %s (%d), %s to %s (%d days)",
                 volcanoName, volcanoNumber, start, end, getDurationInDays());
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -129,7 +126,6 @@ public class Eruption {
         return Objects.hash(volcanoNumber, eruptionNumber);
     }
 
-
-
 }
+
 
