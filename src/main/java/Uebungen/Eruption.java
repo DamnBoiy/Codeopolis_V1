@@ -4,85 +4,80 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-/**
- * Modelliert einen Vulkanausbruch.
- */
+
+ // Modelliert einen Vulkanausbruch.
+
 public class Eruption {
-    private final int volcanoNumber;
-    private final String volcanoName;
-    private final int eruptionNumber;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-    private final String evidenceMethod;
-    private final double latitude;
-    private final double longitude;
+    private int volcanoNumber;
+    private String volcanoName;
+    private int eruptionNumber;
+    private int startYear;
+    private int startMonth;
+    private int startDay;
+    private String evidenceMethod;
+    private int endYear;
+    private int endMonth;
+    private int endDay;
+    private double latitude;
+    private double longitude;
 
     public Eruption(int volcanoNumber, String volcanoName, int eruptionNumber,
-                    LocalDate startDate, LocalDate endDate,
-                    String evidenceMethod, double latitude, double longitude) {
+                    int startYear, int startMonth, int startDay,
+                    String evidenceMethod,
+                    int endYear, int endMonth, int endDay,
+                    double latitude, double longitude) {
         this.volcanoNumber = volcanoNumber;
         this.volcanoName = volcanoName;
         this.eruptionNumber = eruptionNumber;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startYear = startYear;
+        this.startMonth = startMonth;
+        this.startDay = startDay;
         this.evidenceMethod = evidenceMethod;
+        this.endYear = endYear;
+        this.endMonth = endMonth;
+        this.endDay = endDay;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    /**
-     * Berechnet die Dauer des Ausbruchs in Tagen.
-     * Gibt -1 zurück, wenn kein Enddatum bekannt ist.
-     */
-    public long getDurationInDays() {
-        if (startDate != null && endDate != null) {
-            return ChronoUnit.DAYS.between(startDate, endDate);
-        }
-        return -1;
-    }
-
-    /**
-     * Gibt das Jahr des Ausbruchsstarts zurück.
-     */
-    public int getStartYear() {
-        return startDate.getYear();
-    }
-
-    /**
-     * Gibt true zurück, wenn Start- und Enddatum im selben Jahr liegen.
-     */
-    public boolean isSameYear() {
-        return endDate != null && startDate.getYear() == endDate.getYear();
-    }
-
-    /**
-     * Gibt true zurück, wenn der Vulkan nördlich des Äquators liegt.
-     */
-    public boolean isNorth() {
-        return latitude > 0;
-    }
-
-    /**
-     * Gibt true zurück, wenn der Vulkan südlich des Äquators liegt.
-     */
-    public boolean isSouth() {
-        return latitude < 0;
+    public int getVolcanoNumber() {
+        return volcanoNumber;
     }
 
     public String getVolcanoName() {
         return volcanoName;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public int getEruptionNumber() {
+        return eruptionNumber;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public int getStartYear() {
+        return startYear;
+    }
+
+    public int getStartMonth() {
+        return startMonth;
+    }
+
+    public int getStartDay() {
+        return startDay;
     }
 
     public String getEvidenceMethod() {
         return evidenceMethod;
+    }
+
+    public int getEndYear() {
+        return endYear;
+    }
+
+    public int getEndMonth() {
+        return endMonth;
+    }
+
+    public int getEndDay() {
+        return endDay;
     }
 
     public double getLatitude() {
@@ -93,14 +88,32 @@ public class Eruption {
         return longitude;
     }
 
+
+    /**
+     * Berechnet die Dauer des Ausbruchs in Tagen.
+     * Gibt -1 zurück, wenn kein Enddatum bekannt ist.
+     */
+    public long getDurationInDays() {
+        try {
+            LocalDate start = LocalDate.of(startYear, Math.max(1, startMonth), Math.max(1, startDay));
+            LocalDate end = LocalDate.of(endYear, Math.max(1, endMonth), Math.max(1, endDay));
+            return ChronoUnit.DAYS.between(start, end);
+        } catch (Exception e) {
+            return -1; // z.B. ungültiges Datum (Monat 0 etc.)
+        }
+    }
+
+
     @Override
     public String toString() {
+        String start = String.format("%02d.%02d.%04d", startDay, startMonth, startYear);
+        String end = (endYear > 0)
+                ? String.format("%02d.%02d.%04d", endDay, endMonth, endYear)
+                : "unknown";
         return String.format("Eruption of %s (%d), %s to %s (%d days)",
-                volcanoName, volcanoNumber,
-                startDate,
-                (endDate != null ? endDate : "unknown"),
-                getDurationInDays());
+                volcanoName, volcanoNumber, start, end, getDurationInDays());
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -115,5 +128,8 @@ public class Eruption {
     public int hashCode() {
         return Objects.hash(volcanoNumber, eruptionNumber);
     }
+
+
+
 }
 

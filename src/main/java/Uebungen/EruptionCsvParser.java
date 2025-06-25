@@ -48,9 +48,7 @@ public class EruptionCsvParser {
             int startYear = parseIntOrDefault(parts[8], 0);
             int startMonth = parseIntOrDefault(parts[10], 1);
             int startDay = parseIntOrDefault(parts[12], 1);
-            LocalDate startDate = LocalDate.of(startYear, startMonth, startDay);
 
-            LocalDate endDate = null;
             Integer endYear = parseNullableInt(parts[16]);
             Integer endMonth = parseNullableInt(parts[18]);
             Integer endDay = parseNullableInt(parts[20]);
@@ -60,14 +58,21 @@ public class EruptionCsvParser {
                 int d = (endDay != null)
                         ? endDay
                         : YearMonth.of(endYear, m).lengthOfMonth();
-                endDate = LocalDate.of(endYear, m, d);
             }
 
             double latitude = parseDouble(parts[22]);
             double longitude = parseDouble(parts[23]);
 
-            return new Eruption(volcanoNumber, volcanoName, eruptionNumber,
-                    startDate, endDate, evidenceMethod, latitude, longitude);
+            return new Eruption(
+                    volcanoNumber,
+                    volcanoName,
+                    eruptionNumber,
+                    startYear, startMonth, startDay,
+                    evidenceMethod,
+                    endYear, endMonth, endDay,
+                    latitude,
+                    longitude
+            );
 
         } catch (Exception e) {
             System.err.println("Fehler beim Parsen: " + e.getMessage());
